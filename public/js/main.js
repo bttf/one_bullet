@@ -12,10 +12,10 @@ window.requestAnimFrame = (function(){
 })();
 
 var add_event_listeners = function() {
-  // body.addEventListener("keydown", key_down, false);
+  body.addEventListener("keydown", keydown, false);
   // body.addEventListener("keyup", key_up, false);
   // body.addEventListener("keypress", key_press, false);
-  // body.addEventListener("mousedown", mouse_down, false);
+  body.addEventListener("mousedown", mousedown, false);
   // body.addEventListener("mouseup", mouse_up, false);
   body.addEventListener("mousemove", mousemove, false);
 };
@@ -54,6 +54,14 @@ var start = function() {
 
 var mousemove = function(e) {
   game.mousemove(e);
+};
+
+var keydown = function(e) {
+  game.keydown(e);
+};
+
+var mousedown = function(e) {
+  game.mousedown(e);
 };
 
 window.onload = start;
