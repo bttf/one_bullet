@@ -4,6 +4,7 @@ function Game() {
   this.mother = {};
   this.lineSight = {};
   this.gun = {};
+  this.jenkins = {};
 }
 
 Game.prototype.init = function(canvasWidth, canvasHeight) {
@@ -12,10 +13,12 @@ Game.prototype.init = function(canvasWidth, canvasHeight) {
   this.mother = new Mother(canvasWidth, canvasHeight);
   this.lineSight = new LineSight(canvasWidth, canvasHeight, this.jones);
   this.gun = new Gun(this.jones);
+  this.jenkins = new Jenkins(canvasWidth, canvasHeight);
 };
 
 Game.prototype.render = function(time) {
   this.mother.render(time);
+  this.jenkins.render(time);
   this.lineSight.render(time);
   this.jones.render(time);
 };
@@ -23,6 +26,7 @@ Game.prototype.render = function(time) {
 Game.prototype.draw = function(context) {
   this.background.draw(context);
   this.mother.draw(context);
+  this.jenkins.draw(context);
   this.lineSight.draw(context);
   this.jones.draw(context);
 };
