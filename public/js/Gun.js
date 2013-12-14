@@ -1,10 +1,12 @@
-function Gun() {
+function Gun(shooter) {
   var assets = ['audio/draw.ogg',
                 'audio/cock.ogg',
                 'audio/shot.ogg'];
   this.draw = new Audio(assets[0]);
   this.cock = new Audio(assets[1]);
   this.shot = new Audio(assets[2]);
+
+  this.shooter = shooter;
 
   this.draw.preload = "auto";
   this.cock.preload = "auto";
@@ -20,6 +22,7 @@ Gun.prototype.keydown = function(e) {
   switch(e.keyCode) {
     case 32:
       if (this.isDrawn == false) {
+        this.shooter.drawPistol();
         this.draw.play();
         this.isDrawn = true;
       }

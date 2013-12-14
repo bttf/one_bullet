@@ -11,7 +11,7 @@ Game.prototype.init = function(canvasWidth, canvasHeight) {
   this.jones = new Jones(canvasWidth, canvasHeight);
   this.mother = new Mother(canvasWidth, canvasHeight);
   this.lineSight = new LineSight(canvasWidth, canvasHeight, this.jones);
-  this.gun = new Gun();
+  this.gun = new Gun(this.jones);
 };
 
 Game.prototype.render = function(time) {
