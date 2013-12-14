@@ -1,4 +1,7 @@
 function LineSight(canvasWidth, canvasHeight, shooter) {
+  this.shooter = shooter;
+  this.canvasWidth = canvasWidth;
+  this.canvasHeight = canvasHeight;
   this.x = canvasWidth - (canvasWidth / 6);
   this.y = shooter.y + (shooter.frames[0].height / 3);
   this.targetX = 0;
@@ -7,6 +10,8 @@ function LineSight(canvasWidth, canvasHeight, shooter) {
 
 LineSight.prototype.render = function(time) {
   // follow the mouse 
+  this.x = this.canvasWidth - (this.canvasWidth / 6);
+  this.y = this.shooter.y + (this.shooter.frames[0].height / 3);
 };
 
 LineSight.prototype.draw = function(context) {

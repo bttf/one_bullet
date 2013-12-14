@@ -10,28 +10,26 @@ function Background(canvasWidth, canvasHeight) {
 
   this.bar = new Image();
   this.bar.src = assets[0];
-  this.barLoaded = false;
-  this.bar.onload = this.initBar.call(this);
 
   this.floor = new Image();
   this.floor.src = assets[1];
-  this.floorLoaded = false;
-  this.floor.onload = this.initFloor.call(this);
 
   this.ceiling = new Image();
   this.ceiling.src = assets[2];
-  this.ceilingLoaded = false;
-  this.ceiling.onload = this.initCeiling.call(this);
 
   this.wall1 = new Image();
   this.wall1.src = assets[3];
-  this.wall1Loaded = false;
-  this.wall1.onload = this.initWall1.call(this);
 
   this.wall2 = new Image();
   this.wall2.src = assets[4];
-  this.wall2Loaded = false;
-  this.wall2.onload = this.initWall2.call(this);
+
+  this.allImages = [this.bar,
+                    this.floor,
+                    this.ceiling,
+                    this.wall1,
+                    this.wall2];
+  this.imgsHaveInitted = false;
+  this.imgsAreComplete = false;
 }
 
 Background.prototype.draw = function(context) {
@@ -61,7 +59,6 @@ Background.prototype.initBar = function() {
   this.barX = 0;
   this.barY = this.canvasHeight - this.canvasHeight / 2;
   this.barLoaded = true;
-  console.log('barloaded: %s', this.barLoaded);
 };
 
 Background.prototype.initFloor = function() {
@@ -90,7 +87,26 @@ Background.prototype.initWall2 = function() {
 };
 
 Background.prototype.allImagesAreLoaded = function() {
-  var result = this.barLoaded && this.floorLoaded && this.ceilingLoaded && this.wall1Loaded && this.wall2Loaded;
-  //console.log(result);
-  return this.barLoaded && this.floorLoaded && this.ceilingLoaded && this.wall1Loaded && this.wall2Loaded;
+  if (!this.imgsAreComplete) {
+    var allLoaded = true;
+    for (var i = 0; i < this.allImages.length; i++) {
+      if (!this.allImages[i].complete) {
+        allLoaded = false;
+      }
+    }
+    if (allLoaded) {
+      if (!this.imgsHaveInitted) {
+        this.initBar();
+        this.initFloor();
+        this.initCeiling();
+        this.initWall1();
+        this.initWall2();
+        this.imgsHaveInitted = true;
+      }
+      this.imgsAreComplete = true;
+      return true;
+    }
+    return false;
+  }
+  return true;
 }

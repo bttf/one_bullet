@@ -26,8 +26,8 @@ var init_browser = function() {
   body = document.getElementsByTagName("body")[0];
   canvas = document.createElement("canvas");
   canvas.id = "canvas";
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 5;
+  canvas.width = window.innerWidth - 25;
+  canvas.height = window.innerHeight - 25;
   context = canvas.getContext('2d');
   body.appendChild(canvas);
   add_event_listeners();
