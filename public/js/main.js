@@ -17,7 +17,7 @@ var add_event_listeners = function() {
   // body.addEventListener("keypress", key_press, false);
   // body.addEventListener("mousedown", mouse_down, false);
   // body.addEventListener("mouseup", mouse_up, false);
-  // body.addEventListener("mousemove", mouse_move, false);
+  body.addEventListener("mousemove", mousemove, false);
 };
 
 var init_browser = function() {
@@ -43,13 +43,17 @@ var init = function() {
 var loop = function() {
   requestAnimFrame(loop);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  game.render();
+  game.render((new Date()).getTime());
   game.draw(context);
 };
 
 var start = function() {
   init();
   loop();
+};
+
+var mousemove = function(e) {
+  game.mousemove(e);
 };
 
 window.onload = start;
