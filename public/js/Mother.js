@@ -1,5 +1,6 @@
 function Mother(canvasWidth, canvasHeight) {
-  var assets = ['img/mother1.png'];
+  var assets = ['img/mother1.png',
+                'img/mother2.png'];
 
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
@@ -12,6 +13,11 @@ function Mother(canvasWidth, canvasHeight) {
 
   this.imagesLoaded = [];
 
+  this.isDead = false;
+
+  this.scream = new Audio('audio/mother_scream.ogg');
+  this.scream.preload = "auto";
+
   this.frame = 0;
   this.frames = [];
   for (var i = 0; i < assets.length; i++) {
@@ -21,9 +27,14 @@ function Mother(canvasWidth, canvasHeight) {
 }
 
 Mother.prototype.render = function(time) {
-  if (time > (this.lastTick + this.fps)) {
-    this.frame = (this.frame + 1) % this.frames.length;
-    this.lastTick = time;
+  if (!this.isDead) {
+    if (time > (this.lastTick + this.fps)) {
+      this.frame = (this.frame + 1) % 1;
+      this.lastTick = time;
+    }
+  }
+  else {
+    this.frame = 1;
   }
 };
 
@@ -43,4 +54,8 @@ Mother.prototype.allImagesLoaded = function() {
   this.height = this.frames[0].height;
   this.width = this.frames[0].width;
   return allComplete;
+};
+
+Mother.prototype.die = function() {
+  this.isDead = true;
 };

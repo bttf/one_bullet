@@ -26,16 +26,35 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
   this.baby = new Image();
   this.baby.src = 'img/baby1.png';
 
+  this.exclamation = new Image();
+  this.exclamation.src = 'img/exclamation.png';
+  this.exclamationX = this.x + 50;
+  this.exclamationY = this.y - 75;
+  this.alerted = false;
+  this.alertTime = 0;
+  this.eraseExclamation = false;
+
   this.jonesDrawnTick = 0;
+  this.jonesShotTick = 0;
   this.pistolIsDrawn = false;
   this.drawTime = 250;
-  this.shootTime = 250;
+  this.shootTime = 1000;
 
   this.gunIsShot = false;
+
+  this.isDead = false;
 }
 
 Jenkins.prototype.render = function(time) {
   if (this.jones.pistolIsDrawn) {
+    if (!this.alerted) {
+      this.alertTime = time + 1000;
+    }
+    else if (time > this.alertTime) {
+      this.eraseExclamation = true;
+    }
+    this.alerted = true;
+
     if (this.jonesDrawnTick == 0) {
       this.jonesDrawnTick = time + this.drawTime;
     }
@@ -49,6 +68,7 @@ Jenkins.prototype.render = function(time) {
       }
     }
   }
+
   if (!this.pistolIsDrawn) {
     if (time > (this.lastTick + this.fps)) {
       this.frame = (this.frame + 1) % 2;
@@ -60,19 +80,25 @@ Jenkins.prototype.render = function(time) {
   }
   else {
     this.frame = 2;
-    //if (!this.gunIsShot && !this.jones.gunIsShot) {
-      //if (time > this.jonesDrawnTick + this.shootTime) {
-        //this.gun.shot2.play();
-        //this.gunIsShot = true;
-      //}
-    //}
+    if (!this.gunIsShot && this.jones.gunIsShot && !this.isDead
+        && this.jonesShotTick != 0) {
+      console.log('Jenkins has an easy kill right now');
+      if (time > this.jonesShotTick + this.shootTime) {
+        console.log('Jenkins shot you!');
+        this.gun.shot2.play();
+        this.gunIsShot = true;
+      }
+    }
   }
 };
 
-Jenkins.prototype.draw = function() {
+Jenkins.prototype.draw = function(context) {
   if(this.allImagesLoaded()) {
     context.drawImage(this.frames[this.frame], this.x, this.y);
     context.drawImage(this.baby, this.x - 20, this.y + 35);
+  }
+  if (this.jones.pistolIsDrawn && this.alerted && !this.eraseExclamation) {
+    context.drawImage(this.exclamation, this.exclamationX, this.exclamationY);
   }
 };
 

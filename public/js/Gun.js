@@ -31,13 +31,17 @@ Gun.prototype.keydown = function(e) {
         this.draw.play();
         this.isDrawn = true;
       }
-      break;
-    case 17:
       if (this.isDrawn && !this.isCocked) {
         this.cock.play();
         this.isCocked = true;
       }
       break;
+    //case 17:
+      //if (this.isDrawn && !this.isCocked) {
+        //this.cock.play();
+        //this.isCocked = true;
+      //}
+      //break;
   }
 };
 

@@ -43,7 +43,9 @@ LineSight.prototype.doesIntersect = function(obj) {
   var x = this.targetX;
   var y = this.targetY;
   while (x < this.x) {
-    if (y > obj.y && x > obj.x) {
+    if (y > obj.y && x > obj.x
+        && y < obj.y + obj.height
+        && x < obj.x + obj.width) {
       console.log('you just hit obj at %d, %d', obj.x, obj.y);
       return true;
     }
