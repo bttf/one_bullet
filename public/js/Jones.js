@@ -23,6 +23,8 @@ function Jones(canvasWidth, canvasHeight) {
   }
 
   this.pistolIsDrawn = false;
+
+  this.gunIsShot = false;
 }
 
 Jones.prototype.render = function(time) {

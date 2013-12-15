@@ -38,6 +38,7 @@ Gun.prototype.keydown = function(e) {
 
 Gun.prototype.mousedown = function(e) {
   if (this.isDrawn && this.isCocked && this.bullets > 0) {
+    this.shooter.gunIsShot = true;
     this.shot.play();
     this.bullets--;
   }
