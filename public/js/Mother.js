@@ -1,6 +1,7 @@
 function Mother(canvasWidth, canvasHeight) {
   var assets = ['img/mother1.png',
-                'img/mother2.png'];
+                'img/mother2.png',
+                'img/mother3.png'];
 
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
@@ -14,6 +15,8 @@ function Mother(canvasWidth, canvasHeight) {
   this.imagesLoaded = [];
 
   this.isDead = false;
+  
+  this.isLaughing = false;
 
   this.scream = new Audio('audio/mother_scream.ogg');
   this.scream.preload = "auto";
@@ -27,11 +30,14 @@ function Mother(canvasWidth, canvasHeight) {
 }
 
 Mother.prototype.render = function(time) {
-  if (!this.isDead) {
+  if (!this.isDead && !this.isLaughing) {
     if (time > (this.lastTick + this.fps)) {
       this.frame = (this.frame + 1) % 1;
       this.lastTick = time;
     }
+  }
+  else if (this.isLaughing) {
+    this.frame = 2;
   }
   else {
     this.frame = 1;
@@ -59,3 +65,8 @@ Mother.prototype.allImagesLoaded = function() {
 Mother.prototype.die = function() {
   this.isDead = true;
 };
+
+Mother.prototype.laugh = function() {
+  this.isLaughing = true;
+};
+

@@ -2,7 +2,8 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
   var assets = ['img/jenkins1.png',
                 'img/jenkins2.png',
                 'img/jenkins3.png',
-                'img/jenkins4.png'];
+                'img/jenkins4.png',
+                'img/jenkins5.png'];
 
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
@@ -26,6 +27,8 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
 
   this.baby = new Image();
   this.baby.src = 'img/baby1.png';
+  this.babyLaughing = new Image();
+  this.babyLaughing.src = 'img/baby2.png';
   this.babyX = this.x - 20;
   this.babyY = this.y + 35;
   this.babyTick = 0;
@@ -51,6 +54,8 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
   this.isDead = false;
 
   this.dropTheBaby = false;
+
+  this.isLaughing = false;
 }
 
 Jenkins.prototype.render = function(time) {
@@ -127,13 +132,22 @@ Jenkins.prototype.render = function(time) {
     }
   }
 
+  if (this.isLaughing) {
+    this.frame = 4;
+  }
+
 };
 
 Jenkins.prototype.draw = function(context) {
   if(this.allImagesLoaded()) {
     context.drawImage(this.frames[this.frame], this.x, this.y);
     if (!this.babyHasDropped) {
-      context.drawImage(this.baby, this.babyX, this.babyY);
+      if (this.isLaughing) {
+        context.drawImage(this.babyLaughing, this.babyX, this.babyY);
+      }
+      else {
+        context.drawImage(this.baby, this.babyX, this.babyY);
+      }
     }
     else {
       context.save();
@@ -155,7 +169,7 @@ Jenkins.prototype.allImagesLoaded = function() {
       allComplete = false;
     }
   }
-  if (!this.baby.complete) {
+  if (!this.baby.complete || !this.babyLaughing.complete) {
     allComplete = false;
   }
   this.width = this.frames[0].width;
@@ -163,3 +177,6 @@ Jenkins.prototype.allImagesLoaded = function() {
   return allComplete;
 };
 
+Jenkins.prototype.laugh = function() {
+  this.isLaughing = true;
+};

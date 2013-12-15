@@ -48,8 +48,8 @@ Game.prototype.render = function(time) {
     }
     else if (this.lineSight.doesIntersect(this.jones.feet)) {
       this.jones.footShot = true;
-      //this.mother.laugh();
-      //this.jenkins.laugh();
+      this.mother.laugh();
+      this.jenkins.laugh();
     }
   }
 };
