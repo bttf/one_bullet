@@ -1,11 +1,19 @@
 function Game() {
-  var assets = ['img/start_menu.png'];
+  var assets = ['img/start_menu.png',
+                'img/chandelier_menu.png',
+                'img/jenkins_menu.png',
+                'img/mother_menu.png',
+                'img/foot_menu.png'];
 
   this.menus = [];
   for (var i = 0; i < assets.length; i++) {
     this.menus.push(new Image());
     this.menus[i].src = assets[i];
   }
+  this.endMenu = 0;
+
+  this.laughter = new Audio('audio/laughter.ogg');
+  this.laughter.preload = "auto";
 
   this.background = {};
   this.jones = {};
@@ -56,19 +64,24 @@ Game.prototype.render = function(time) {
       console.log('WTF YOU JUST SHOT THE MOTHER');
       this.mother.scream.play();
       this.mother.die();
+      this.endMenu = 3;
     }
     else if (this.lineSight.doesIntersect(this.chandelier)) {
       console.log('You hit the chandelier! Dumbass!');
       this.chandelier.fall();
+      this.endMenu = 1;
     }
     else if (this.lineSight.doesIntersect(this.jenkins)) {
       console.log('You just shot Jenkins!');
       this.jenkins.isDead = true;
+      this.endMenu = 2;
     }
     else if (this.lineSight.doesIntersect(this.jones.feet)) {
       this.jones.footShot = true;
       this.mother.laugh();
       this.jenkins.laugh();
+      this.laughter.play();
+      this.endMenu = 4;
     }
   }
 };
@@ -82,6 +95,31 @@ Game.prototype.draw = function(context) {
   this.jones.draw(context);
   if (!this.gameHasStarted && this.allMenusLoaded()) {
     context.drawImage(this.menus[0], this.menusX, this.menusY);
+  }
+
+  if (this.gameIsOver) {
+    switch(this.endMenu) {
+      case 1:
+        if (this.chandelier.hasFallen && this.jones.isShot) {
+          context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
+        }
+        break;
+      case 2:
+        if (this.jenkins.babyHasDropped) {
+          context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
+        }
+        break;
+      case 3:
+        if (this.jones.isShot) {
+          context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
+        }
+        break
+      case 4:
+          if (this.laughter.ended) {
+            context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
+          }
+          break;
+    }
   }
 
   //if (this.winOrLose !== "win" && this.winOrLose !== "lose") {

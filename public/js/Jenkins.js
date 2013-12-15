@@ -5,6 +5,10 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
                 'img/jenkins4.png',
                 'img/jenkins5.png'];
 
+  this.thud = new Audio('audio/thud.ogg');
+  this.thud.preload = "auto";
+  this.thud.hasPlayed = false;
+
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
 
@@ -124,7 +128,7 @@ Jenkins.prototype.render = function(time) {
   if (this.dropTheBaby) {
     if (time > this.babyTick + this.babyFPS
         && this.babyY < (this.canvasHeight - (this.canvasHeight / 5))) {
-      this.babyY += 15;
+      this.babyY += 35;
       this.babyTick = time;
     }
     if (this.babyY >= (this.canvasHeight - (this.canvasHeight / 5))) {
@@ -150,6 +154,10 @@ Jenkins.prototype.draw = function(context) {
       }
     }
     else {
+      if (!this.thudHasPlayed) {
+        this.thud.play();
+        this.thudHasPlayed = true;
+      }
       context.save();
       context.translate(this.babyX + 35, this.babyY + 50);
       context.rotate(60*Math.PI/180);

@@ -8,10 +8,12 @@ function Chandelier(canvasWidth, canvasHeight, mother) {
 
   this.isFalling = false;
 
+  this.hasFallen = false;
+
   this.lastTick = 0;
   this.fps = 1000/30;
 
-  this.speed = 25;
+  this.speed = 45;
 
   this.frame = 0;
   this.frames = [];
@@ -31,6 +33,7 @@ Chandelier.prototype.render = function(time) {
         if (!this.mother.isDead) {
           this.mother.scream.play();
           this.mother.die();
+          this.hasFallen = true;
         }
       }
       this.lastTick = time;
