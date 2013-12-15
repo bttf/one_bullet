@@ -28,11 +28,11 @@ LineSight.prototype.mousemove = function(e) {
   var y = e.clientY;
   var dx, dy;
   if (x < this.x) {
-    while (x > 0 && y > 0) {
+    while (x > 0 && y > 0 && y < this.canvasHeight) {
       dx = this.x - x;
       dy = this.y - y;
-      x -= dx;
-      y -= dy;
+      x -= dx / 50;
+      y -= dy / 50;
     }
     this.targetX = x;
     this.targetY = y;

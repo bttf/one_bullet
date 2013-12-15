@@ -31,25 +31,25 @@ Game.prototype.render = function(time) {
 
   if (this.jones.gunIsShot && !this.gameIsOver) {
     this.jenkins.jonesShotTick = time;
+    this.gameIsOver = true;
 
     if (this.lineSight.doesIntersect(this.mother)) {
       console.log('WTF YOU JUST SHOT THE MOTHER');
       this.mother.scream.play();
       this.mother.die();
-      this.gameIsOver = true;
     }
     else if (this.lineSight.doesIntersect(this.chandelier)) {
       console.log('You hit the chandelier! Dumbass!');
       this.chandelier.fall();
-      this.gameIsOver = true;
     }
     else if (this.lineSight.doesIntersect(this.jenkins)) {
       console.log('You just shot Jenkins!');
       this.jenkins.isDead = true;
-      this.gameIsOver = true;
     }
-    else {
-      this.gameIsOver = true;
+    else if (this.lineSight.doesIntersect(this.jones.feet)) {
+      this.jones.footShot = true;
+      //this.mother.laugh();
+      //this.jenkins.laugh();
     }
   }
 };
@@ -63,33 +63,33 @@ Game.prototype.draw = function(context) {
   this.jones.draw(context);
 
   //if (this.winOrLose !== "win" && this.winOrLose !== "lose") {
-    //if (this.jenkins.gunIsShot) {
-      //if (!this.jones.gunIsShot) {
-        //console.log('YOU LOSE');
-        //this.winOrLose = "lose";
-      //}
-      //else {
-        //if (this.jenkins.isDead) {
-          //console.log('YOU WIN');
-          //this.winOrLose = "win";
-        //}
-      //}
-    //}
-    //else {
-      //if (this.jones.gunIsShot) {
-        //console.log('YOU WIN');
-        //this.winOrLose = "win";
-      //}
-    //}
+  //if (this.jenkins.gunIsShot) {
+  //if (!this.jones.gunIsShot) {
+  //console.log('YOU LOSE');
+  //this.winOrLose = "lose";
   //}
   //else {
-    //this.gameIsOver = true;
-    //if (this.winOrLose === "win") {
-      //this.gameOver.drawYouWin(context);
-    //}
-    //else if (this.winOrLose === "lose") {
-      //this.gameOver.drawYouLose(context);
-    //}
+  //if (this.jenkins.isDead) {
+  //console.log('YOU WIN');
+  //this.winOrLose = "win";
+  //}
+  //}
+  //}
+  //else {
+  //if (this.jones.gunIsShot) {
+  //console.log('YOU WIN');
+  //this.winOrLose = "win";
+  //}
+  //}
+  //}
+  //else {
+  //this.gameIsOver = true;
+  //if (this.winOrLose === "win") {
+  //this.gameOver.drawYouWin(context);
+  //}
+  //else if (this.winOrLose === "lose") {
+  //this.gameOver.drawYouLose(context);
+  //}
   //}
 };
 

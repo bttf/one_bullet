@@ -1,7 +1,9 @@
 function Jones(canvasWidth, canvasHeight) {
   var assets = ['img/jones1.png',
                 'img/jones2.png',
-                'img/jones3.png'];
+                'img/jones3.png',
+                'img/jones4.png',
+                'img/jones5.png'];
 
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
@@ -24,6 +26,10 @@ function Jones(canvasWidth, canvasHeight) {
   this.pistolIsDrawn = false;
 
   this.gunIsShot = false;
+
+  this.isShot = false;
+
+  this.footShot = false;
 }
 
 Jones.prototype.render = function(time) {
@@ -33,6 +39,14 @@ Jones.prototype.render = function(time) {
       this.lastTick = time;
     }
   }
+  // If you're shot
+  else if (this.isShot) {
+    this.frame = 3;
+  }
+  else if (this.footShot) {
+    this.frame = 4;
+  }
+  // If pistol is drawn
   else {
     this.frame = 2;
   }
@@ -63,5 +77,11 @@ Jones.prototype.allImagesLoaded = function() {
   }
   this.width = this.frames[0].width;
   this.height = this.frames[0].height;
+  this.feet = {
+    "x": this.x,
+    "y": (this.y + (this.height - 30)),
+    "width": this.width,
+    "height": 30,
+  };
   return allComplete;
 };
