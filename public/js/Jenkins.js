@@ -33,6 +33,7 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
 
   this.gunIsShot = false;
 }
+
 Jenkins.prototype.render = function(time) {
   if (this.jones.pistolIsDrawn) {
     if (this.jonesDrawnTick == 0) {
@@ -59,12 +60,12 @@ Jenkins.prototype.render = function(time) {
   }
   else {
     this.frame = 2;
-    if (!this.gunIsShot && !this.jones.gunIsShot) {
-      if (time > this.jonesDrawnTick + this.shootTime) {
-        this.gun.shot2.play();
-        this.gunIsShot = true;
-      }
-    }
+    //if (!this.gunIsShot && !this.jones.gunIsShot) {
+      //if (time > this.jonesDrawnTick + this.shootTime) {
+        //this.gun.shot2.play();
+        //this.gunIsShot = true;
+      //}
+    //}
   }
 };
 
@@ -85,5 +86,7 @@ Jenkins.prototype.allImagesLoaded = function() {
   if (!this.baby.complete) {
     allComplete = false;
   }
+  this.width = this.frames[0].width;
+  this.height = this.frames[0].height;
   return allComplete;
 };

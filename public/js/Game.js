@@ -15,7 +15,7 @@ Game.prototype.init = function(canvasWidth, canvasHeight) {
   this.jones = new Jones(canvasWidth, canvasHeight);
   this.mother = new Mother(canvasWidth, canvasHeight);
   this.lineSight = new LineSight(canvasWidth, canvasHeight, this.jones);
-  this.gun = new Gun(this.jones);
+  this.gun = new Gun(this.lineSight, this.jones);
   this.jenkins = new Jenkins(canvasWidth, canvasHeight, this.jones);
   this.gameOver = new GameOver(canvasWidth, canvasHeight);
 };
@@ -25,6 +25,15 @@ Game.prototype.render = function(time) {
   this.jenkins.render(time);
   this.lineSight.render(time);
   this.jones.render(time);
+
+  if (this.jones.gunIsShot && !this.gameIsOver) {
+    if (this.lineSight.doesIntersect(this.mother)) {
+      console.log('WTF YOU JUST SHOT THE MOTHER');
+    }
+    else  if (this.lineSight.doesIntersect(this.jenkins)) {
+      console.log('You just shot Jenkins!');
+    }
+  }
 };
 
 Game.prototype.draw = function(context) {

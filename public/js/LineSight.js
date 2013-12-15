@@ -21,7 +21,6 @@ LineSight.prototype.draw = function(context) {
   context.lineWidth = 1;
   context.strokeStyle = 'rgba(255, 0, 0, 0.3)';
   context.stroke();
-
 }
 
 LineSight.prototype.mousemove = function(e) {
@@ -38,5 +37,21 @@ LineSight.prototype.mousemove = function(e) {
     this.targetX = x;
     this.targetY = y;
   }
+};
+
+LineSight.prototype.doesIntersect = function(obj) {
+  var x = this.targetX;
+  var y = this.targetY;
+  while (x < this.x) {
+    if (y > obj.y && x > obj.x) {
+      console.log('you just hit obj at %d, %d', obj.x, obj.y);
+      return true;
+    }
+    dx = this.x - this.targetX;
+    dy = this.y - this.targetY;
+    x += dx / 20;
+    y += dy / 20;
+  }
+  return false;
 };
 

@@ -30,6 +30,12 @@ var init_browser = function() {
   canvas.height = window.innerHeight - 25;
   context = canvas.getContext('2d');
   body.appendChild(canvas);
+  youtube = document.createElement("iframe");
+  youtube.width = "560";
+  youtube.height = "315";
+  youtube.src = "//www.youtube.com/embed/XG4BhWTNaq8?rel=0&autoplay=1&loop=1";
+  youtube.frameborder = "0";
+  body.appendChild(youtube);
   add_event_listeners();
   horizon = (canvas.height / 2);
   center_axis = (canvas.width / 2);
