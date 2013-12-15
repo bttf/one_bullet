@@ -50,7 +50,7 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
   this.jonesDrawnTick = 0;
   this.jonesShotTick = 0;
   this.pistolIsDrawn = false;
-  this.drawTime = 250;
+  this.drawTime = 500;
   this.shootTime = 1000;
 
   this.gunIsShot = false;
