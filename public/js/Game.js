@@ -3,7 +3,8 @@ function Game() {
                 'img/chandelier_menu.png',
                 'img/jenkins_menu.png',
                 'img/mother_menu.png',
-                'img/foot_menu.png'];
+                'img/foot_menu.png',
+                'img/missed_menu.png'];
 
   this.menus = [];
   for (var i = 0; i < assets.length; i++) {
@@ -14,6 +15,10 @@ function Game() {
 
   this.laughter = new Audio('audio/laughter.ogg');
   this.laughter.preload = "auto";
+
+  this.music = new Audio('audio/music.ogg');
+  this.music.loop = true;
+  this.music.preload = "auto";
 
   this.background = {};
   this.jones = {};
@@ -32,6 +37,8 @@ function Game() {
 Game.prototype.init = function(canvasWidth, canvasHeight) {
   this.canvasWidth = canvasWidth;
   this.canvasHeight = canvasHeight;
+
+  this.music.play();
 
   this.background = new Background(canvasWidth, canvasHeight);
   this.jones = new Jones(canvasWidth, canvasHeight);
@@ -83,6 +90,9 @@ Game.prototype.render = function(time) {
       this.laughter.play();
       this.endMenu = 4;
     }
+    else {
+      this.endMenu = 5;
+    }
   }
 };
 
@@ -116,6 +126,11 @@ Game.prototype.draw = function(context) {
         break
       case 4:
           if (this.laughter.ended) {
+            context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
+          }
+          break;
+      case 5:
+          if (this.jones.isShot) {
             context.drawImage(this.menus[this.endMenu], this.menusX, this.menusY);
           }
           break;
@@ -183,3 +198,4 @@ Game.prototype.allMenusLoaded = function() {
   }
   return allComplete;
 };
+

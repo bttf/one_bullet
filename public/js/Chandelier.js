@@ -3,6 +3,9 @@ function Chandelier(canvasWidth, canvasHeight, mother) {
 
   this.mother = mother;
 
+  this.thud = new Audio('audio/thud2.ogg');
+  this.thud.preload = "auto";
+
   this.x = mother.x;
   this.y = 0;
 
@@ -33,6 +36,9 @@ Chandelier.prototype.render = function(time) {
         if (!this.mother.isDead) {
           this.mother.scream.play();
           this.mother.die();
+          if (!this.hasFallen)
+            this.thud.play();
+
           this.hasFallen = true;
         }
       }
