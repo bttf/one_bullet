@@ -33,6 +33,7 @@ Game.prototype.draw = function(context) {
   this.jenkins.draw(context);
   this.lineSight.draw(context);
   this.jones.draw(context);
+
   if (this.winOrLose !== "win" && this.winOrLose !== "lose") {
     if (this.jenkins.gunIsShot) {
       if (!this.jones.gunIsShot) {

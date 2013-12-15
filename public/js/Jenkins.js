@@ -28,7 +28,8 @@ function Jenkins(canvasWidth, canvasHeight, jones) {
 
   this.jonesDrawnTick = 0;
   this.pistolIsDrawn = false;
-  this.drawTime = 500;
+  this.drawTime = 250;
+  this.shootTime = 250;
 
   this.gunIsShot = false;
 }
@@ -58,9 +59,9 @@ Jenkins.prototype.render = function(time) {
   }
   else {
     this.frame = 2;
-    if (!this.gunIsShot) {
-      if (time > this.jonesDrawnTick + 250) {
-        this.gun.shot.play();
+    if (!this.gunIsShot && !this.jones.gunIsShot) {
+      if (time > this.jonesDrawnTick + this.shootTime) {
+        this.gun.shot2.play();
         this.gunIsShot = true;
       }
     }
