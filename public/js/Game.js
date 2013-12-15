@@ -1,4 +1,12 @@
 function Game() {
+  var assets = ['img/start_menu.png'];
+
+  this.menus = [];
+  for (var i = 0; i < assets.length; i++) {
+    this.menus.push(new Image());
+    this.menus[i].src = assets[i];
+  }
+
   this.background = {};
   this.jones = {};
   this.mother = {};
@@ -9,9 +17,14 @@ function Game() {
   this.chandelier = {};
   this.winOrLose = "nothing_yet";
   this.gameIsOver = false;
+
+  this.gameHasStarted = false;
 }
 
 Game.prototype.init = function(canvasWidth, canvasHeight) {
+  this.canvasWidth = canvasWidth;
+  this.canvasHeight = canvasHeight;
+
   this.background = new Background(canvasWidth, canvasHeight);
   this.jones = new Jones(canvasWidth, canvasHeight);
   this.mother = new Mother(canvasWidth, canvasHeight);
@@ -23,6 +36,12 @@ Game.prototype.init = function(canvasWidth, canvasHeight) {
 };
 
 Game.prototype.render = function(time) {
+  if (!this.gameHasStarted) {
+    if (this.allMenusLoaded()) {
+      this.menusX = (this.canvasWidth / 2) - (this.menus[0].width / 2);
+      this.menusY = (this.canvasHeight / 2) - (this.menus[0].height / 2);
+    }
+  }
   this.mother.render(time);
   this.jenkins.render(time);
   this.chandelier.render(time);
@@ -61,6 +80,9 @@ Game.prototype.draw = function(context) {
   this.chandelier.draw(context);
   this.lineSight.draw(context);
   this.jones.draw(context);
+  if (!this.gameHasStarted && this.allMenusLoaded()) {
+    context.drawImage(this.menus[0], this.menusX, this.menusY);
+  }
 
   //if (this.winOrLose !== "win" && this.winOrLose !== "lose") {
   //if (this.jenkins.gunIsShot) {
@@ -94,14 +116,32 @@ Game.prototype.draw = function(context) {
 };
 
 Game.prototype.mousemove = function(e) {
-  this.lineSight.mousemove(e);
+  if (this.gameHasStarted) {
+    this.lineSight.mousemove(e);
+  }
 };
 
 Game.prototype.mousedown = function(e) {
-  this.gun.mousedown(e);
+  if (this.gameHasStarted) {
+    this.gun.mousedown(e);
+  }
+  else {
+    this.gameHasStarted = true;
+  }
 };
 
 Game.prototype.keydown = function(e) {
-  this.gun.keydown(e);
+  if (this.gameHasStarted) {
+    this.gun.keydown(e);
+  }
 };
 
+Game.prototype.allMenusLoaded = function() {
+  var allComplete = true;
+  for (var i = 0; i < this.menus.length; i++) {
+    if (!this.menus[i].complete) {
+      allComplete = false;
+    }
+  }
+  return allComplete;
+};
