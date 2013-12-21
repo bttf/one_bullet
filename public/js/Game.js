@@ -175,6 +175,9 @@ Game.prototype.mousemove = function(e) {
 };
 
 Game.prototype.mousedown = function(e) {
+  if (this.gameIsOver) {
+    location.reload();
+  }
   if (this.gameHasStarted) {
     this.gun.mousedown(e);
   }
